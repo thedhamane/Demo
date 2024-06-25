@@ -1,9 +1,30 @@
+import java.util.Map;
+
 public class StudentGrades {
-    int marks;
-    String studentName;
-    public StudentGrades(int marks, String studentName){
-        this.marks=marks;
-        this.studentName=studentName;
+    private boolean isPass;
+    private Map<String,Integer> resultCard;
+
+    public boolean isPass() {
+        return isPass;
     }
 
+    public void setPass(boolean pass) {
+        isPass = pass;
+    }
+
+    public Map<String, Integer> getResultCard() {
+        return resultCard;
+    }
+
+    public void setResultCard(Map<String, Integer> resultCard) {
+        this.resultCard = resultCard;
+    }
+
+    @Override
+    public String toString() {
+        return "StudentGrades{" +
+                "isPass=" + isPass +
+                ", resultCard=" + resultCard +
+                '}';
+    }
 }

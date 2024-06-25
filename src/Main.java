@@ -1,60 +1,60 @@
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
-    public static void Grading(String studentName,int marks) {
-        if (marks > 80) {
-            System.out.println(studentName + " Got First Class");
-        } else if (marks < 80 && marks >= 60) {
-            System.out.println(studentName+" Got Second Class");
-        } else if (marks < 60 && marks >= 35) {
-            System.out.println(studentName + " Got Passed");
-        } else {
-            System.out.println(studentName + " Got Fail");
-        }
-    }
     public static void main(String[] args) {
+       List<Student> studentsList = getStudents(100);
 
-//            StudentGrades student1 = new StudentGrades(78,"Aniruddha");
-//            StudentGrades student2= new StudentGrades(81,"Ajay");
-//            StudentGrades student3= new StudentGrades(59,"Parag");
-//            StudentGrades student4= new StudentGrades(56,"Sumit");
-//            StudentGrades student5= new StudentGrades(34,"Dhiraj");
-              StudentGrades[] arr= new StudentGrades[5];
+        List<Student> passList =new ArrayList<>();
+        List<Student> failList =new ArrayList<>();
+        for(Student s :studentsList) {
 
-//                  arr[0]=student1;
-//                  arr[1]=student2;
-//                  arr[2]=student3;
-//                  arr[3]=student4;
-//                  arr[4]=student5;
-                  for(int i=0;i<5;i++){
-                      Scanner sc=new Scanner(System.in);
-                      System.out.println("Enter marks & name for index "+i);
-                      int num=sc.nextInt();
-                      String name=sc.next();
-                      StudentGrades s = new StudentGrades(num,name);
-                      arr[i]=s;
+            Map<String, Integer> currentMarks = s.getStudentGrades().getResultCard();
 
-                  }
+            Set<String> keySet = currentMarks.keySet();
+            int totalMarks = 0;
+            for (String key : keySet) {
+                int marks = currentMarks.get(key);
+                totalMarks = totalMarks + marks;
+            }
+            if(totalMarks<=150){
+                s.getStudentGrades().setPass(false);
+                failList.add(s);
+            }
+            else{
+               s.getStudentGrades().setPass(true);
+               passList.add(s);
+            }
 
-                 for(int i=0;i< arr.length;i++) {           //4,2,0
-                     Grading(arr[i].studentName,arr[i].marks);  //arr[4],arr[2],arr[0]
-                 }
+        }
+        System.out.println("Passlist- "+passList.size());
+        System.out.println("Faillist- "+failList.size());
 
-
-
-
-
-
-
-//           if(marks>80){
-//               System.out.println(student+" Got First Class");
-//           }
-//           else if (marks<80 && marks>=60) {
-//               System.out.println(student+" Got Second Class");
-//           } else if (marks < 60 && marks>=35) {
-//               System.out.println(student+" Got Passed");
-//           }
-//           else{
-//               System.out.println(student+" Got Fail");
-           }
     }
+
+
+    public static List<Student> getStudents(int num){
+        List<Student> studentList =new ArrayList<>();
+
+        for(int i=1;i<=num;i++){
+            Student s1= new Student();
+            s1.setName("Student-"+i);
+            s1.setRollno(i);
+            StudentGrades studentGrades= new StudentGrades();
+            Map<String,Integer> resultCard= new HashMap<>();
+            resultCard.put("English",(int)(Math.random()*100) );
+            resultCard.put("Hindi",(int)(Math.random()*100));
+            resultCard.put("Marathi",(int)(Math.random()*100));
+            StudentInfo studentInfo= new StudentInfo();
+            studentInfo.setAddress("SAROLA"+i);
+            studentInfo.seteMail("aniruddha@gmail");
+            studentInfo.setPhoneNo("88888888");
+            s1.setStudentInfo(studentInfo);
+
+            studentGrades.setResultCard(resultCard);
+            s1.setStudentGrades(studentGrades);
+            studentList.add(s1);
+        }
+
+      return studentList;
+    }
+}
